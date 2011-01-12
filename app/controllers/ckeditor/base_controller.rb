@@ -1,6 +1,7 @@
 class Ckeditor::BaseController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
   
+  before_filter :authenticate_user!, :only => [:index, :create, :destroy]
   before_filter :swf_options, :only => [:index, :create]
   before_filter :find_asset, :only => [:destroy]
   
@@ -45,6 +46,7 @@ class Ckeditor::BaseController < ApplicationController
 	    end
       
       record.attributes = options
+      #TODO check if no obligatory
       record.user ||= current_user if respond_to?(:current_user)
       
       if record.valid? && record.save

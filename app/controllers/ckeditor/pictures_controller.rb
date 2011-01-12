@@ -1,7 +1,7 @@
 class Ckeditor::PicturesController < Ckeditor::BaseController
 
   def index
-    @pictures = Ckeditor.image_model.order("id DESC")
+    @pictures = Ckeditor.image_model.belongs_to(current_user.id).order("id DESC")
     respond_with(@pictures) 
   end
   
@@ -18,6 +18,7 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
   protected
   
     def find_asset
-      @picture = Ckeditor.image_model.find(params[:id])
+      @picture = Ckeditor.image_model.belongs_to(current_user.id).find(params[:id])
     end
+
 end
