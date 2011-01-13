@@ -47,7 +47,6 @@ class Ckeditor::BaseController < ApplicationController
 	    end
       
       record.attributes = options
-      #TODO check if no obligatory
       record.user ||= current_user if respond_to?(:current_user)
       
       if record.valid? && record.save
